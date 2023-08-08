@@ -1,8 +1,8 @@
 <?php
-    include_once "controller/session.php";
-    include_once "controller/session.php";
-	$pagetitle="Event Attendance Manager";
-	$pagesub="Dashboard";
+include_once "controller/session.php";
+include_once "controller/session.php";
+$pagetitle = "Event Attendance Manager";
+$pagesub = "Review";
 
 ?>
 <!doctype html>
@@ -39,7 +39,6 @@
 
     <!-- COLOR SKIN CSS -->
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="../assets/colors/color1.css" />
-
 </head>
 
 <body class="app sidebar-mini ltr">
@@ -55,15 +54,15 @@
         <div class="page-main">
 
             <!-- app-Header -->
-           <?php 
-		   include("includes/appheader.php");
-		   ?>
+           <?php
+           include("includes/appheader.php");
+           ?>
             <!-- /app-Header -->
 
             <!--APP-SIDEBAR-->
-             <?php 
-		   include("includes/appsidebar.php");
-		   ?>
+             <?php
+             include("includes/appsidebar.php");
+             ?>
                 <!--/APP-SIDEBAR-->
             </div>
 
@@ -75,9 +74,9 @@
                     <div class="main-container container-fluid">
 
                         <!-- PAGE-HEADER -->
-                        <?php 
-		   include("includes/pageheader.php");
-		   ?>
+                        <?php
+                        include("includes/pageheader.php");
+                        ?>
                         <!-- PAGE-HEADER END -->
                         <!--Row -->
                         <div class="row">
@@ -99,12 +98,12 @@
                                                         <select name="program" class="form-control" id="">
                                                             <option value="">select program</option>
                                                             <?php
-                                                                $sql="SELECT * FROM programs";
-                                                                $results=mysqli_query($conn, $sql);
-                                                                while ($info = mysqli_fetch_array($results)) {
-                                                                    echo '<option value="'.$info['program'].'">'.$info['program'].'</option>
+                                                            $sql = "SELECT * FROM programs";
+                                                            $results = mysqli_query($conn, $sql);
+                                                            while ($info = mysqli_fetch_array($results)) {
+                                                                echo '<option value="' . $info['program'] . '">' . $info['program'] . '</option>
                                                                     ';
-                                                                }
+                                                            }
                                                             ?>
                                                         </select>
                                                     </div>
@@ -132,31 +131,50 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header  justify-content-between">
-                                        <h3 class="card-title">Attendance Detail</h3>
+                                        <h3 class="card-title">Review Report</h3>
                                        
                                     </div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="form-group">
-                                                    <label class="form-label">select program <span
+                                                    <label class="form-label">Select Program <span
                                                             class="text-red">*</span></label>
-                                                    <select name="program" class="form-control" id="">
-                                                        <option value="">select program</option>
+                                                    <select name="program" class="form-control" id="" onchange="javascript:location.href = this.value;">
+                                                        <option value="">Select Program</option>
                                                         <?php
-                                                            $sql="SELECT * FROM programs";
-                                                            $results=mysqli_query($conn, $sql);
-                                                            while ($info = mysqli_fetch_array($results)) {
-                                                                echo '<option value="'.$info['program'].'">'.$info['program'].'</option>
-                                                                ';
-                                                            }
+                                                        $sql = "SELECT DISTINCT  eventname FROM userattendance";
+                                                        $results = mysqli_query($conn, $sql);
+                                                        while ($info = mysqli_fetch_array($results)) {
+                                                            $string = preg_replace('/\d+/', '', $info['eventname']);
+                                                            $worldToRemove = 'DAY';
+                                                            $modifiedString = str_replace($worldToRemove, '', $string);
+
+                                                            $worldToRemove = 'BATCH';
+                                                            $modifiedString = str_replace($worldToRemove, '', $modifiedString);
+                                                            $worldToRemove = 'B';
+                                                            $modifiedString = str_replace($worldToRemove, '', $modifiedString);
+
+                                                            $sql1 = "SELECT * FROM userattendance WHERE eventname='" . $info['eventname'] . "' ";
+                                                            $results1 = mysqli_query($conn, $sql1);
+                                                            $fetch = mysqli_fetch_assoc($results1);
+                                                            $worldsArray = explode(' ', $modifiedString);
+                                                            $get = $worldsArray[0];
+
+                                                            echo '<option value="print.php?usoff=' . $get . '">' . $info['eventname'] . '</option>';
+                                                            // echo '<option value="?usoff=' . $get . '">' . $modifiedString . '</option>';
+                                                            // echo '<option value="?usoff='.$fetch['user_office'].'">'.$info['eventname'] .'</option>';
+                                                        
+                                                        }
                                                         ?>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="table-responsive">
-                                            <table id="file-datatable"
+                                       
+
+                                        <!--<div class="table-responsive">
+                                             <table id="file-datatable"
                                                 class="table table-bordered text-nowrap key-buttons border-bottom">
                                                 <thead>
                                                     <tr>
@@ -170,39 +188,43 @@
                                                         <th class="border-bottom-0">Company</th>
                                                         <th class="border-bottom-0">Email</th>
                                                         <th class="border-bottom-0">Phone</th>
-                                                        <th class="border-bottom-0">Gender</th>
-                                                        <th class="border-bottom-0">Job</th>
-                                                        <th class="border-bottom-0">Department</th>
-                                                        <!-- <th class="border-bottom-0">Start date</th>
-                                                        <th class="border-bottom-0">Salary</th> -->
                                                     </tr>
                                                 </thead>
                                                 <tbody id="generatebody">
                                                     <?php
-                                                        $sql="SELECT * FROM userattendance";
-                                                        $results=mysqli_query($conn, $sql);
-                                                        $sn = 1;
-                                                        while ($info = mysqli_fetch_array($results)) {
-                                                            echo '<tr>
-                                                                <td>'.$sn++.'</td>
-                                                            <td>'.$info['eventname'].'</td>
-                                                            <td>'.$info['user_date'].'</td>
-                                                            <td>'.$info['user_venue'].'</td>
-                                                            <td>'.$info['user_office'].'</td>
-                                                            <td>'.$info['user_surname'].'</td>
-															<td>'.$info['user_firstname'].'</td>
-                                                            <td>'.$info['user_company'].'</td>
-                                                            <td>'.$info['user_email'].'</td>
-                                                            <td>'.$info['user_number'].'</td>
-                                                            <td>'.$info['gender'].'</td>
-                                                            <td>'.$info['user_job'].'</td>
-                                                            <td>'.$info['user_department'].'</td>
-                                                            </tr>';
-                                                        }
+                                                    // if (isset($_GET['usoff'])) {
+                                                    //     $usoff = $_GET['usoff'];
+                                                    //     $sql1="SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%".$usoff."%' ";
+                                                    //     $results1=mysqli_query($conn, $sql1);
+                                                    
+                                                    //     while ( $fetch = mysqli_fetch_assoc($results1)) {
+                                                    //         # code...
+                                                    //         $usoffice =  $fetch['user_office'];            
+                                                    //         $eventname =  $fetch['eventname'];            
+                                                    //         $sql="SELECT * FROM form_review WHERE user_office='$usoffice'";
+                                                    //         $results=mysqli_query($conn, $sql);
+                                                    //         $sn = 1;
+                                                    //         while ($info = mysqli_fetch_array($results)) {
+                                                    //             echo '<tr>
+                                                    //                 <td>'.$sn++.'</td>
+                                                    //             <td>'.$eventname.'</td>
+                                                    //             <td>'.$info['user_date'].'</td>
+                                                    //             <td>'.$info['user_venue'].'</td>
+                                                    //             <td>'.$info['user_office'].'</td>
+                                                    //             <td>'.$info['user_surname'].'</td>
+                                                    //             <td>'.$info['user_firstname'].'</td>
+                                                    //             <td>'.$info['user_company'].'</td>
+                                                    //             <td>'.$info['user_email'].'</td>
+                                                    //             <td>'.$info['user_number'].'</td>
+                                                    //             </tr>';
+                                                    //         }
+                                                    //     }
+                                                    // }
+                                                    
                                                     ?>
                                                 </tbody>
                                             </table>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -246,12 +268,12 @@
                                                                 <select name="program" class="form-control" id="">
                                                                     <option value="">Select Event</option>
                                                                     <?php
-                                                                        $sql="SELECT * FROM programs";
-                                                                        $results=mysqli_query($conn, $sql);
-                                                                        while ($info = mysqli_fetch_array($results)) {
-                                                                            echo '<option value="'.$info['program'].'">'.$info['program'].'</option>
+                                                                    $sql = "SELECT * FROM programs";
+                                                                    $results = mysqli_query($conn, $sql);
+                                                                    while ($info = mysqli_fetch_array($results)) {
+                                                                        echo '<option value="' . $info['program'] . '">' . $info['program'] . '</option>
                                                                             ';
-                                                                        }
+                                                                    }
                                                                     ?>
                                                                 </select>
                                                             </div>
@@ -872,9 +894,9 @@
         <!-- Country-selector modal-->
 
         <!-- FOOTER -->
-       <?php 
-		   include("includes/footer.php");
-		   ?>
+       <?php
+       include("includes/footer.php");
+       ?>
         <!-- FOOTER END -->
     </div>
 

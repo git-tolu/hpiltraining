@@ -50,7 +50,7 @@
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="evaluationreport.php"><i
                                         class="side-menu__icon fe fe-layers"></i><span
-                                        class="side-menu__label">Evaluation </span></a>
+                                        class="side-menu__label">Review Report </span></a>
                             </li>
 
 

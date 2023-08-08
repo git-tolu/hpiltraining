@@ -1,9 +1,9 @@
 <?php
 include_once "controller/session.php";
-$id = $_GET['id'];
-$sql = "SELECT * FROM training_course WHERE id = $id";
-$results = mysqli_query($conn, $sql);
-$info = mysqli_fetch_assoc($results);
+// $id = $_GET['id'];
+// $sql = "SELECT * FROM training_course WHERE id = $id";
+// $results = mysqli_query($conn, $sql);
+// $info = mysqli_fetch_assoc($results);
 
 ?>
 <!DOCTYPE html>
@@ -180,38 +180,18 @@ $info = mysqli_fetch_assoc($results);
         object-position:50% 50%;
         background-size: contain;
     }
+    .rowtitle {
+        font-weight: 900;
+        font-size: 20px;
+        text-transform: capitalize;
+    }
 </style>
 
 <body>
-    <div class="wrapper" id="tbl_exporttable_to_xls">
+<div class="wrapper" id="tbl_exporttable_to_xls">
         <div class="container">
             <table>
                 <thead>
-                    <tr>
-                        <td colspan="5">
-                            <div class="logo-placer">Course Details</div>
-                        </td>
-                    </tr>
-                </thead>
-                <thead>
-                    <tr>
-                        <th>title</th>
-                        <th>category</th>
-                        <th>description</th>
-                        <th>amount</th>
-                        <th>cover_image</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><?= $info['title'] ?></td>
-                        <td><?= $info['category'] ?></td>
-                        <td><?= $info['description'] ?></td>
-                        <td><?= $info['amount'] ?></td>
-                        <td><img src="controller/coursePic/<?=$info['cover_image'] ?>"  class="img-fluid"></td>
-                    </tr>
-                </tbody>
-                <!-- <thead>
                     <tr>
                         <td colspan="7">
                             <div class="logo-placer">NMA O&M TRAINING FEEDBACK/EVALUATION FORM</div>
@@ -220,360 +200,689 @@ $info = mysqli_fetch_assoc($results);
                     <tr>
                         <td colspan="7">
                             <div class="form-placer">
-                                <small style="text-align: center;">Please note that items marked (*) are optional</small>
+                                <small style="text-align: center; " class="rowtitle">TRAINING SUMMARY</small>
                             </div>
                         </td>
+                    </tr>
+                    <tr>
+                        <!-- <td colspan="7">
+                            Training title: 
+                        </td> -->
+                        <?php
+                            if (isset($_GET['usoff'])) {
+                                $usoff = $_GET['usoff'];
+                                $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+                                $results1 = mysqli_query($conn, $sql1);
+
+                                $sn = 1;
+                                while ($fetch = mysqli_fetch_assoc($results1)) {
+                                    # code...
+                                    $usoffice = $fetch['user_office'];
+                                    $eventname = $fetch['eventname'];
+                                    $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                                    $results = mysqli_query($conn, $sql);
+                                    while ($info = mysqli_fetch_array($results)) {
+                                        echo '
+                                            <tr>
+                                                <td colspan="">Training title: ' . $fetch['eventname'] . '</td>
+                                        ';
+                                        //     <td colspan="">' . $info['user_firstname'] . '</td>
+                                        //     <td colspan="">' . $info['user_company'] . '</td>
+                                        // <tr>
+                                    }
+                                //     echo '
+                                    
+                                //         <td colspan="">Batch Training '.$sn++ .'' . $fetch['eventname'] . '</td>
+                                //     <tr>
+                                // ';
+                                }
+                            }
+                            ?>
                     </tr>
                     <tr>
                         <td colspan="7">
                             <p class="feedback-reply"><b>If Yes please provide details below</b> (Optional):</p>
                             <div class="holder1">
-                                <div class="form-placer-two1">
-                                    <p>*NAME(Last name first)</p>
-                                    <p>WORKGROUP</p>
-                                </div>
-                                <div class="default1">
-                                    <input type="text" class="inputs1" placeholder="<?= $info['user_firstname'] ?>"> <br>
-                                    <input type="text" class="inputs1" placeholder="<?= $info['user_company'] ?>"> <br>
+                    <tr class="form-placer-two1">
+                        <td colspan="3" class="rowtitle">*NAME(Last name first)</td>
+                        <td colspan="3" class="rowtitle">WORKGROUP</td>
+                    <tr>
+                        <!-- <div class="form-placer-two1">
+                                                                        <p>*NAME(Last name first)</p>
+                                                                        <p>WORKGROUP</p>
+                                                                    </div> -->
+                        <div class="default1">
+                            <?php
+                            if (isset($_GET['usoff'])) {
+                                $usoff = $_GET['usoff'];
+                                $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+                                $results1 = mysqli_query($conn, $sql1);
 
-                                </div>
-                            </div>
+                                while ($fetch = mysqli_fetch_assoc($results1)) {
+                                    # code...
+                                    $usoffice = $fetch['user_office'];
+                                    $eventname = $fetch['eventname'];
+                                    $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                                    $results = mysqli_query($conn, $sql);
+                                    $sn = 1;
+                                    while ($info = mysqli_fetch_array($results)) {
+                                        echo '
+                                                                                    <tr>
+                                                                                        <td colspan="3">' . $info['user_firstname'] . '</td>
+                                                                                        <td colspan="3">' . $info['user_company'] . '</td>
+                                                                                    <tr>
+                                                                                ';
+                                    }
+                                }
+                            }
+                            ?>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">
-                            <div class="holder">
-                                <div class="form-placer-two">
-                                    <p>*NAME(Last name first)</p>
-                                    <p>WORKGROUP</p>
-                                    <p>COURSE TITLE</p>
-                                    <p>VENUE</p>
-                                    <p>DATE(mm/dd/yy)</p>
-                                </div>
-                                <div class="default">
-                                    <input type="text" class="inputs" placeholder="<?= $info['user_firstname'] ?>"> <br>
-                                    <input type="text" class="inputs" placeholder="<?= $info['user_company'] ?>"> <br>
-                                    <input type="text" class="inputs" placeholder="<?= $info['course'] ?>"> <br>
-                                    <input type="text" class="inputs" placeholder="<?= $info['user_event'] ?>"> <br>
-                                    <input type="text" class="inputs" placeholder="<?= $info['user_date'] ?>"> <br>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="7">
-                            <div class="feedback">
-                                <p>Would you like to be contacted concerning your feedback </p> 
-                                <input type="radio" name="check" id="radio" <?php if ($info['updates'] == 'Yes') {echo 'checked';} ?>>
-                                <label for="">Yes</label> 
-                                <input type="radio" name="check" id="radio" <?php if ($info['updates'] == 'No') {echo 'checked';} ?>> 
-                                <label for="">No </label>
-                            </div>
-                        </td>
-                    </tr>
+                        </div>
+        </div>
 
-                    <tr>
-                        <th>S/N</th>
-                        <th>Evaluation Questions</th>
-                        <th>Strongly Disagree</th>
-                        <th> Disagree</th>
-                        <th>Indifferent</th>
-                        <th>Agree</th>
-                        <th>Strongly Agree</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td style="text-align:left;">The training objectives for each topic were identified and achieved</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['training'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['training'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['training'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['training'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['training'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td style="text-align:left;">The content was organized and easy to follow</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['content'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['content'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['content'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['content'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['content'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td style="text-align:left;">The materials distributed were relevant and useful</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['materials'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['materials'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['materials'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['materials'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['materials'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td style="text-align:left;">The trainer had good knowledge of the subject matter</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['knowledge'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['knowledge'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['knowledge'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['knowledge'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['knowledge'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td style="text-align:left;">The mode of deployment and quality of instruction was good</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['deployment'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['deployment'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['deployment'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['deployment'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['deployment'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td style="text-align:left;">There was a good level of Class participation and interaction</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>7</td>
-                        <td style="text-align:left;">Logistics and Accommodation were adequate</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>8</td>
-                        <td style="text-align:left;">Learning aids and environment were adequate</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['participartion'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>9</td>
-                        <td style="text-align:left;">The Learning event was relevant</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['relevant'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['relevant'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['relevant'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['relevant'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['relevant'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>10</td>
-                        <td style="text-align:left;">The Learning event met my expectation</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['expectations'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['expectations'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['expectations'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['expectations'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['expectations'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr>
-                        <td>11</td>
-                        <td style="text-align:left;">I will be able to apply the knowledge acquired</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['apply'] == 'Strongly Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['apply'] == 'Disagree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['apply'] == 'Indifferent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['apply'] == 'Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['apply'] == 'Strongly Agree') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr style="background-color: gray;">
-                        <td></td>
-                        <td></td>
-                        <td>Excellent</td>
-                        <td>Good</td>
-                        <td>Average</td>
-                        <td>Poor</td>
-                        <td>Very Poor</td>
-                    </tr>
-                    <tr>
-                        <td>12</td>
-                        <td style="text-align: left;">What is your overall evaluation of this Learning event?</td>
-                        <td><input type="radio" name="" id="" <?php if ($info['evaluation'] == 'Excellent') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['evaluation'] == 'Good') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['evaluation'] == 'Average') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['evaluation'] == 'Poor') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                        <td><input type="radio" name="" id="" <?php if ($info['evaluation'] == 'Very Poor') {
-                                                                    echo 'checked';
-                                                                } ?>></td>
-                    </tr>
-                    <tr style="background-color: gray;">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>A</td>
-                        <td style="text-align: left;" colspan="6">What were your top two expectations for this course?</td>
-                    </tr>
-                    <tr>
-                        <td>i</td>
-                        <td style="text-align: left;" colspan="6"> <?= $info['topexpectation'] ?></td>
+        </td>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <div class="holder">
+                    <!-- <div >
+                                                                        </div> -->
+        <tr class="form-placer-two">
+            <td class="rowtitle">*NAME(Last name first)</td>
+            <td class="rowtitle">WORKGROUP</td>
+            <td class="rowtitle">COURSE TITLE</td>
+            <td class="rowtitle">VENUE</td>
+            <td class="rowtitle">DATE(mm/dd/yy)</td>
+        <tr>
+            <div class="default">
+                <?php
+                if (isset($_GET['usoff'])) {
+                    $usoff = $_GET['usoff'];
+                    $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+                    $results1 = mysqli_query($conn, $sql1);
 
-                    </tr>
-                    <tr>
-                        <td>ii</td>
-                        <td style="text-align: left;" colspan="6"></td>
-                    </tr>
-                    <tr>
-                        <td>B</td>
-                        <td style="text-align: left;" colspan="6">What suggestions do you have to improve on this learning event? </td>
-                    </tr>
-                    <tr>
-                        <td>i</td>
-                        <td style="text-align: left;" colspan="6"><?= $info['user_improvement'] ?></td>
+                    while ($fetch = mysqli_fetch_assoc($results1)) {
+                        # code...
+                        $usoffice = $fetch['user_office'];
+                        $eventname = $fetch['eventname'];
+                        $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                        $results = mysqli_query($conn, $sql);
+                        $sn = 1;
+                        while ($info = mysqli_fetch_array($results)) {
+                            echo '
+                                                                                    <tr>
+                                                                                    <td>' . $info['user_firstname'] . '</td>
+                                                                                    <td>' . $info['user_company'] . '</td>
+                                                                                    <td>' . $fetch['eventname'] . '</td>
+                                                                                    <td>' . $info['user_event'] . '</td>
+                                                                                    <td>' . $info['user_date'] . '</td>
+                                                                                    <tr>
+                                                                                    ';
+                        }
+                    }
+                }
+                ?>
 
-                    </tr>
-                    <tr>
-                        <td>ii</td>
-                        <td style="text-align: left;" colspan="6"></td>
-                    </tr>
-                    <tr>
-                        <td>C</td>
-                        <td style="text-align: left;" colspan="6">What aspect of the learning event kindled your interest most? </td>
-                    </tr>
-                    <tr>
-                        <td>i</td>
-                        <td style="text-align: left;" colspan="6"><?= $info['user_event'] ?></td>
+            </div>
+    </div>
+    </td>
+    </tr>
 
-                    </tr>
-                    <tr>
-                        <td>ii</td>
-                        <td style="text-align: left;" colspan="6"></td>
-                    </tr>
-                    <tr>
 
-                        <td style="text-align: center;" colspan="7"><b>Thanks for participating</b> </td>
-                    </tr>
-                </tbody> -->
+    <!-- <tr>
+                                                            <th>S/N</th>
+                                                            <th>Evaluation Questions</th>
+                                                            <th>Strongly Disagree</th>
+                                                            <th> Disagree</th>
+                                                            <th>Indifferent</th>
+                                                            <th>Agree</th>
+                                                            <th>Strongly Agree</th>
+                                                        </tr> -->
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">The training objectives for each topic were
+                identified and achieved</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['training'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">The content was organized and easy to follow
+            </td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['content'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">The materials distributed were relevant and
+                useful</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['materials'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">The trainer had good knowledge of the subject
+                matter</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['knowledge'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">The mode of deployment and quality of
+                instruction was good</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['deployment'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">There was a good level of Class participation
+                and interaction</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['participartion'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">Logistics and Accommodation were adequate</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['participartion'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">Learning aids and environment were adequate
+            </td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['participartion'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">The Learning event was relevant</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['relevant'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">The Learning event met my expectation</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['expectations'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">I will be able to apply the knowledge acquired
+            </td>
+        </tr>
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['apply'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">What is your overall evaluation of this
+                Learning event?</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td colspan="2">' . $info['user_surname'] . '</td>
+                                                                            <td colspan="2">' . $info['user_firstname'] . '</td>
+                                                                            <td colspan="2">' . $info['evaluation'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">What were your top two expectations for this
+                course?</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td>' . $info['user_surname'] . '</td>
+                                                                            <td>' . $info['user_firstname'] . '</td>
+                                                                            <td style="text-align: left;" colspan="6"> ' . $info['topexpectation'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">What suggestions do you have to improve on this
+                learning event?</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td>' . $info['user_surname'] . '</td>
+                                                                            <td>' . $info['user_firstname'] . '</td>
+                                                                            <td style="text-align: left;" colspan="6"> ' . $info['user_improvement'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">What aspect of the learning event kindled your
+                interest most?</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td>' . $info['user_surname'] . '</td>
+                                                                            <td>' . $info['user_firstname'] . '</td>
+                                                                            <td style="text-align: left;" colspan="6"> ' . $info['user_event'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle"> Suggestions for improvement</td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td>' . $info['user_surname'] . '</td>
+                                                                            <td>' . $info['user_firstname'] . '</td>
+                                                                            <td style="text-align: left;" colspan="6"> ' . $info['user_improvement'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle"> Would you like to recieve latest updates and
+                mentorship from us? </td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td>' . $info['user_surname'] . '</td>
+                                                                            <td>' . $info['user_firstname'] . '</td>
+                                                                            <td style="text-align: left;" colspan="6"> ' . $info['updates'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+            <td colspan="6" style="text-align: center;" class="rowtitle">List Areas you need further training and
+                Mentorship </td>
+        </tr>
+
+        <?php
+        if (isset($_GET['usoff'])) {
+            $usoff = $_GET['usoff'];
+            $sql1 = "SELECT DISTINCT  eventname,user_office FROM userattendance WHERE eventname LIKE '%" . $usoff . "%' ";
+            $results1 = mysqli_query($conn, $sql1);
+
+            while ($fetch = mysqli_fetch_assoc($results1)) {
+                # code...
+                $usoffice = $fetch['user_office'];
+                $eventname = $fetch['eventname'];
+                $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                $results = mysqli_query($conn, $sql);
+                $sn = 1;
+                while ($info = mysqli_fetch_array($results)) {
+                    echo '
+                                                                        <tr>
+                                                                            <td>' . $info['user_surname'] . '</td>
+                                                                            <td>' . $info['user_firstname'] . '</td>
+                                                                            <td style="text-align: left;" colspan="6"> ' . $info['mentorship'] . '</td>
+                                                                        </tr>
+                                                                        ';
+                }
+            }
+        }
+        ?>
+        <tr>
+
+            <td style="text-align: center;" colspan="7"><b>Thanks for participating</b> </td>
+        </tr>
+    </tbody>
             </table>
         </div>
     </div>

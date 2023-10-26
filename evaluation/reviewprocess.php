@@ -4,6 +4,7 @@
             if (isset($_POST['reviewsubmit'])) {
                 // var_dump($_POST);
                 // Grab info from form
+               $userprogram = $_SESSION['program'];
                $user_date = mysqli_real_escape_string($conn, $_POST['user_date']);
                 $user_venue = mysqli_real_escape_string($conn, $_POST['user_venue']);
                 $user_office = mysqli_real_escape_string($conn, $_POST['user_office']);
@@ -31,7 +32,7 @@
                 $mentorship = mysqli_real_escape_string($conn, $_POST['mentorship']);
                 $id=0;
 				
-				$sql = "INSERT INTO  form_review VALUES ('$id','$user_date', '$user_venue', '$user_office', '$user_surname', '$user_firstname', '$user_company', '$user_email', '$user_number', '$training', '$content', '$materials','$knowledge','$deployment','$participartion','$relevant','$expectations','$apply','$evaluation','$topexpectation','$user_event','$user_improvement','$updates','$mentorship')";
+				$sql = "INSERT INTO  form_review VALUES ('$id','$user_date', '$userprogram', '$user_venue', '$user_office', '$user_surname', '$user_firstname', '$user_company', '$user_email', '$user_number', '$training', '$content', '$materials','$knowledge','$deployment','$participartion','$relevant','$expectations','$apply','$evaluation','$topexpectation','$user_event','$user_improvement','$updates','$mentorship')";
 
 if (mysqli_query($conn, $sql)) {
 	$attendcode = $_SESSION['attendancecode'];

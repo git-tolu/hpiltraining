@@ -152,7 +152,13 @@ $pagesub = "Review";
 
                                                             $worldToRemove = 'BATCH';
                                                             $modifiedString = str_replace($worldToRemove, '', $modifiedString);
-                                                            $worldToRemove = 'B';
+                                                            $worldToRemove = ' B';
+                                                            $modifiedString = str_replace($worldToRemove, '', $modifiedString);
+                                                            $worldToRemove = ' A';
+                                                            $modifiedString = str_replace($worldToRemove, '', $modifiedString);
+                                                            $worldToRemove = ' I';
+                                                            $modifiedString = str_replace($worldToRemove, '', $modifiedString);
+                                                            $worldToRemove = ' II';
                                                             $modifiedString = str_replace($worldToRemove, '', $modifiedString);
 
                                                             $sql1 = "SELECT * FROM userattendance WHERE eventname='" . $info['eventname'] . "' ";
@@ -160,11 +166,13 @@ $pagesub = "Review";
                                                             $fetch = mysqli_fetch_assoc($results1);
                                                             $worldsArray = explode(' ', $modifiedString);
                                                             $get = $worldsArray[0];
-
-                                                            echo '<option value="print.php?usoff=' . $get . '">' . $info['eventname'] . '</option>';
-                                                            // echo '<option value="?usoff=' . $get . '">' . $modifiedString . '</option>';
+                                                            echo '<option value="?usoff=' . $get . '">' . $modifiedString . '</option>';
+                                                            // if($modifiedString == $modifiedString){
+                                                            // }
+                                                            
+                                                            // echo '<option value="print.php?usoff=' . $get . '">' . $info['eventname'] . '</option>';
                                                             // echo '<option value="?usoff='.$fetch['user_office'].'">'.$info['eventname'] .'</option>';
-                                                        
+                                                            
                                                         }
                                                         ?>
                                                     </select>

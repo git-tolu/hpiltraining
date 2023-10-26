@@ -6,17 +6,18 @@ header("Location: index.php");
 }
 $password=$_SESSION['attendancecode'];
 $sql="SELECT * FROM attendant WHERE pincode='$password' AND status = 'active'";
-            $rez= mysqli_query($conn, $sql);
+$rez= mysqli_query($conn, $sql);
            // $sql1="UPDATE attendant SET status = 'expired' WHERE user_i='$username' AND pincode='$password'";
            // $rez1= mysqli_query($conn, $sql1);    
             if ($rez) {
                 // echo "hkijki";
                 if(mysqli_num_rows($rez) == 1){
-				
-				 while($info = mysqli_fetch_array($rez)) {
-                $pname = strtoupper($info['program']);	
-                
-				 }
+                    
+                    while($info = mysqli_fetch_array($rez)) {
+                        $pname = strtoupper($info['program']);	
+                        $learningpage = $info['learningpage'];
+                        $_SESSION['learningpage'] = $learningpage;
+                    }
 				}else{
 					header("Location: index.php");
 				}

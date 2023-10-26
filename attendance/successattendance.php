@@ -1,5 +1,9 @@
 <?php 
     include_once "controller/config.php"; 
+    
+    $learningpage = $_SESSION['learningpage'];
+    header("Location: ".$learningpage."");
+
 session_destroy();
 unset($_SESSION['attendancecode'])  ;
 ?>

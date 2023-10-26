@@ -12,6 +12,7 @@
           //  $sql="SELECT * FROM attendant WHERE user_i='$username' AND pincode='$password' AND status = 'active'";
             $sql="SELECT * FROM attendant WHERE pincode='$password' AND status = 'active'";
             $rez= mysqli_query($conn, $sql);
+            $info = mysqli_fetch_assoc($rez);
            // $sql1="UPDATE attendant SET status = 'expired' WHERE user_i='$username' AND pincode='$password'";
            // $rez1= mysqli_query($conn, $sql1);    
             if ($rez) {
@@ -19,6 +20,7 @@
                 if(mysqli_num_rows($rez) == 1){
                    // $_SESSION['session2'] = $username;
                     $_SESSION['attendancecode'] = $password;
+                    $_SESSION['program'] = $info['program'];
                     //$_SESSION['dbpresent'] = "present";
 					
                     echo 'login';

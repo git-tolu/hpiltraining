@@ -224,6 +224,14 @@
                                                         </div>
                                                         <div class="col-sm-12">
                                                             <div class="form-group">
+                                                                <label class="form-label">Learning Page <span
+                                                                        class="text-red">*</span></label>
+                                                                <input type="text" name="learningpage" class="form-control"
+                                                                    placeholder="https://www.bing.com/">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
                                                                 <label class="form-label">No of Participants <span
                                                                         class="text-red">*</span></label>
                                                                 <input type="number" name="participants" class="form-control"

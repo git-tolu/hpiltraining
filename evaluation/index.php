@@ -1,5 +1,7 @@
 <?php 
-include_once "controller/config.php";
+    include_once "controller/config.php"; 
+session_destroy();
+unset($_SESSION['attendancecode'])  ;
 ?>
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -19,16 +21,20 @@ include_once "controller/config.php";
     <link rel="shortcut icon" type="image/x-icon" href="../assets/images/brand/favicon.ico" />
 
     <!-- TITLE -->
-    <title>HPIL: Training Feedback/Evaluation Form </title>
+    <title>HPIL Attendance Access</title>
+
     <!-- BOOTSTRAP CSS -->
     <link id="style" href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
     <!-- STYLE CSS -->
     <link href="../assets/css/style.css" rel="stylesheet" />
     <link href="../assets/css/dark-style.css" rel="stylesheet" />
     <link href="../assets/css/transparent-style.css" rel="stylesheet">
     <link href="../assets/css/skin-modes.css" rel="stylesheet" />
+
     <!--- FONT-ICONS CSS -->
     <link href="../assets/css/icons.css" rel="stylesheet" />
+
     <!-- COLOR SKIN CSS -->
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="../assets/colors/color1.css" />
 
@@ -49,374 +55,49 @@ include_once "controller/config.php";
         <div class="page">
             <div class="">
 
-                 <!-- CONTAINER OPEN -->
-                <div class="col col-login mx-auto mt-7">
+                <div class="col col-login mx-auto">
                     <div class="text-center">
-                        <img src="../assets/images/brand/logo-white.png" class="header-brand-img m-0" alt="">
+                        <img src="../assets/images/brand/logo-white.png" class="header-brand-img" alt="">
                     </div>
                 </div>
+                <!-- CONTAINER OPEN -->
                 <div class="container-login100">
                     <div class="wrap-login100 p-6">
-                         <form  class="needs-validation" method="post" action="reviewprocess.php" novalidate>
-                            <span class="login100-form-title">
-									<B><font color='red'>TRAINING FEEDBACK/EVALUATION FORM</font> 
-									<?php 
-									  $tdate=date("d-M-Y, h:i:sa");
-									?></B>
-								</span>
-                            <div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
+                        <div id="error" style="border-radius: 50px;"
+                            class="bg-danger text-center justify-content-center aligin-items-center d-flex text-dark">
+                        </div>
+                        <form id="userLogin" class="login100-form validate-form">
+                           <!-- <div class="wrap-input100 validate-input input-group"
+                                data-bs-validate="Valid email is required: ex@abc.xyz">
                                 <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
                                     <i class="mdi mdi-account" aria-hidden="true"></i>
                                 </a>
-                                 <input type="text" class="form-control" name="user_date"
-                                    value="<?php echo $tdate; ?>" readonly>
-									<input type="hidden" class="form-control" name="user_date"
-                                    value="<?php echo $tdate; ?>" required>
-                            </div>
-							
-							
-							
-							 <div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
+                                <input class="input100 border-start-0 ms-0 form-control" name="username" type="text"
+                                    placeholder="User name" required>
+                            </div> --->
+                            <div class="wrap-input100 validate-input input-group" id="Password-toggle"
+                                data-bs-validate="Password is required">
                                 <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
+                                    <i class="zmdi zmdi-eye" aria-hidden="true"></i>
                                 </a>
-                                 <input type="text" class="form-control" name="user_venue" placeholder="Venue"
-                                    required>
+                                <input class="input100 border-start-0 ms-0 form-control" name="password" type="text"
+                                    placeholder="Attendance Code" required>
                             </div>
-							
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
+                            <div class="container-login100-form-btn pt-0">
+                                <a id="userLoginBtn" href="" class="login100-form-btn btn-primary">
+                                    Give Me Access
                                 </a>
-                                 <input type="text" class="form-control" name="user_office" placeholder="Office Ext"
-                                    required>
                             </div>
-							
-							 <div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                                 <input type="text" class="form-control" name="user_surname" placeholder="Surname"
-                                    required>
-                            </div>
-							
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                                <input type="text" class="form-control" name="user_firstname" placeholder="First name"
-                                    required>
-                            </div>
-							
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                                <input type="text" class="form-control" name="user_company" placeholder="Company"
-                                    required>
-                            </div>
-							
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                                 <input type="email" class="form-control" name="user_email" placeholder="Email"
-                                    required>
-                            </div>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                                <input type="number" class="form-control" name="user_number" placeholder="Mobile Phone"
-                                    required>
-                            </div>
-							
-							<label class="form-label">The training objective for each topic were identified and
-                                    achieved<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="training" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							
-							<label class="form-label">The content was organized and easy to follow
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="content" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							
-							
-							<label class="form-label">The materials distributed were relevant and useful
-
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="materials" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							<label class="form-label">The trainer had good knowledge of the subject matter
-
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="knowledge" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							
-							
-							<label class="form-label">The mode of deployment and quality of instruction was good
-
-
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="deployment" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-								<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							<label class="form-label">There was a good level of online participation and interaction
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="participartion" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							
-							
-							<label class="form-label">The Learning event was relevant
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="relevant" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-								<label class="form-label">The Learning event met my expectation
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="expectations" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country" required>
-									
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							<label class="form-label">I will be able to apply the knowledge acquired
-
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="apply" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
-									<option value="">Select</option>
-									<option value="Strongly Agree">Strongly Agree</option>
-									<option value="Agree">Agree</option>
-									<option value="Indifferent">Indifferent</option>
-									<option value="Disagree">Disagree</option>
-									<option value="Strongly Disagree">Strongly Disagree</option>
-								  
-								</select>
-                            </div>
-							
-							
-							
-							
-							<label class="form-label">What is your overall evaluation of this Learning event?
-
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <select name="evaluation" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
-									<option value="">Select</option>
-									<option value="Excellent">Excellent</option>
-									<option value="Good">Good</option>
-									<option value="Average">Average</option>
-									<option value="Poor">Poor</option>
-								
-								  
-								</select>
-                            </div>
-							
-							
-							<label class="form-label">What were your top two expectations for this course?
-
-<span class="text-red"> *</span></label>
-							<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-								
-                               <textarea name="topexpectation" class="form-control mb-4" placeholder="Your Answer Here..." rows="4" required></textarea>
-                            </div>
-							
-						
-							
-							
-							
-						<label class="form-label">What aspect of the learning event kindled your interest most?
-<span class="text-red"> *</span></label>
-						<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                                <input type="text" class="form-control" name="user_event" placeholder="Your Answer"
-                                    required>
-                            </div>
-							
-							<label class="form-label">Suggestions for improvement
-<span class="text-red"> *</span></label>
-						<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                                <textarea name="user_improvement" class="form-control mb-4" placeholder="Your Answer Here..." rows="4" required></textarea>
-                            </div>
-							
-							<label class="form-label">Would you like to recieve latest updates and mentorship from us?
-<span class="text-red"> *</span></label>
-						<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                               <select name="updates" class="form-control form-select form-select-sm select2" data-bs-placeholder="Select Country">
-									<option value="">Select</option>
-									<option value="Yes">Yes</option>
-									<option value="No">No</option>
-									
-								</select>
-                            </div>
-							
-							
-							<label class="form-label">List Areas you need further training and Mentorship
-<span class="text-red"> *</span></label>
-						<div class="wrap-input100 validate-input input-group" data-bs-validate="Valid email is required: ex@abc.xyz">
-                                <a href="javascript:void(0)" class="input-group-text bg-white text-muted">
-                                    <i class="mdi mdi-account" aria-hidden="true"></i>
-                                </a>
-                               <textarea name="mentorship" class="form-control mb-4" placeholder="Your Answer Here..." rows="4" required></textarea>
-                            </div>
-							
-							
-							
-							
-							
-						
-						
-						
-                            <div class="container-login100-form-btn">
-                               
-									 <button name="reviewsubmit" class="login100-form-btn btn-primary" type="submit">Submit</button>
-                            </div>
-                          
-                            
                         </form>
                     </div>
                 </div>
                 <!-- CONTAINER CLOSED -->
             </div>
         </div>
-        <!-- End PAGE -->
+        <!-- End GLOABAL LOADER -->
 
     </div>
-     <!-- BACKGROUND-IMAGE CLOSED -->
+    <!-- BACKGROUND-IMAGE CLOSED -->
 
     <!-- JQUERY JS -->
     <script src="../assets/js/jquery.min.js"></script>
@@ -428,9 +109,6 @@ include_once "controller/config.php";
     <!-- SHOW PASSWORD JS -->
     <script src="../assets/js/show-password.min.js"></script>
 
-    <!-- GENERATE OTP JS -->
-    <script src="../assets/js/generate-otp.js"></script>
-
     <!-- Perfect SCROLLBAR JS-->
     <script src="../assets/plugins/p-scroll/perfect-scrollbar.js"></script>
 
@@ -439,18 +117,40 @@ include_once "controller/config.php";
 
     <!-- CUSTOM JS -->
     <script src="../assets/js/custom.js"></script>
-
     <!-- SWEET-ALERT JS -->
-    <script src="../assets/plugins/sweet-alert/sweetalert.min.js"></script>
-    <script src="../assets/js/sweet-alert.js"></script>
-
-    <!-- SELECT2 JS -->
-    <script src="../assets/plugins/select2/select2.full.min.js"></script>
-
-    <!-- FORMVALIDATION JS -->
-    <script src="../assets/js/form-validation.js"></script>
+    <script src="../assets/js/sweet.js"></script>
     <!-- register ajax -->
-    
+    <script>
+        $(document).ready(function () {
+            // user login processing
+            $("#userLoginBtn").click(function (e) {
+                e.preventDefault()
+                if ($('#userLogin')[0].checkValidity()) {
+                    $("#userLoginBtn").val("please wait...")
+                    $.ajax({
+                        url: 'controller/action.php',
+                        method: 'POST',
+                        data: $("#userLogin").serialize() + '&action=userLogin',
+                        success: function (data) {
+                            console.log(data)
+                            if (data == 'login') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Congratulations',
+                                    text: 'Access Granted'
+                                }).then(function () {
+                                    location.href = "evaluation_form.php"
+                                })
+                            } else {
+                                $("#error").html(data)
+                                $("#userLoginBtn").val("")
+                            }
+                        },
+                    })
+                }
+            })
+        })
+    </script>
 
 </body>
 

@@ -1,6 +1,6 @@
 <?php
     include_once "controller/session.php";
-    $pagetitle="Event Attendance Manager";
+    $pagetitle="Training Attendance Manager";
 	$pagesub="Generate Code";
 
 ?>
@@ -137,38 +137,71 @@
                                             href="#modaldemo">Generate Attendance Code</button>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table id="file-datatable"
-                                                class="table table-bordered text-nowrap key-buttons border-bottom">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-bottom-0">s/n</th>
-                                                        <th class="border-bottom-0">program</th>
-                                                        <th class="border-bottom-0">User_id</th>
-                                                        <th class="border-bottom-0">Pincode</th>
-                                                        <th class="border-bottom-0">Status</th>
-                                                        <!-- <th class="border-bottom-0">Start date</th>
-                                                        <th class="border-bottom-0">Salary</th> -->
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="generatebody">
-                                                    <?php
-                                                        $sql="SELECT * FROM attendant";
-                                                        $results=mysqli_query($conn, $sql);
-                                                        $sn = 1;
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Select Training <span
+                                                            class="text-red">*</span></label>
+                                                    <select name="program" class="form-control" id="" onchange="javascript:location.href = this.value;">
+                                                        <option value="">Select Training</option>
+                                                        <?php
+                                                        $sql = "SELECT DISTINCT  eventname FROM userattendance";
+                                                        $results = mysqli_query($conn, $sql);
                                                         while ($info = mysqli_fetch_array($results)) {
-                                                            echo '<tr>
-                                                                <td>'.$sn++.'</td>
-                                                                <td>'.$info['program'].'</td>
-                                                                <td>'.$info['user_i'].'</td>
-                                                                <td>'.$info['pincode'].'</td>
-                                                                <td>'.$info['status'].'</td>
-                                                            </tr>';
+
+                                                            $sql1 = "SELECT * FROM userattendance WHERE eventname='" . $info['eventname'] . "' ";
+                                                            $results1 = mysqli_query($conn, $sql1);
+                                                            $fetch = mysqli_fetch_assoc($results1);
+                                                            $worldsArray = explode(' ', $modifiedString);
+                                                            $get = $worldsArray[0];
+                                                            // echo '<option value="?usoff=' . $get . '">' . $modifiedString . '</option>';
+                                                            // if($modifiedString == $modifiedString){
+                                                            // }
+                                                            
+                                                            // echo '<option value="print.php?usoff=' . $get . '">' . $info['eventname'] . '</option>';
+                                                            echo '<option value="?usoff='.$info['eventname'].'">'.$info['eventname'] .'</option>';
+                                                            
                                                         }
-                                                    ?>
-                                                </tbody>
-                                            </table>
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <?php if(isset($_GET['usoff'])):  ?>
+                                            <div class="table-responsive">
+                                                <table id="file-datatable"
+                                                    class="table table-bordered text-nowrap key-buttons border-bottom">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">s/n</th>
+                                                            <th class="border-bottom-0">program</th>
+                                                            <th class="border-bottom-0">User_id</th>
+                                                            <th class="border-bottom-0">Pincode</th>
+                                                            <th class="border-bottom-0">Status</th>
+                                                            <!-- <th class="border-bottom-0">Start date</th>
+                                                            <th class="border-bottom-0">Salary</th> -->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="generatebody">
+                                                        <?php
+                                                            $sql="SELECT * FROM attendant WHERE program = '".$_GET['usoff']."'";
+                                                            $results=mysqli_query($conn, $sql);
+                                                            $sn = 1;
+                                                            while ($info = mysqli_fetch_array($results)) {
+                                                                echo '<tr>
+                                                                    <td>'.$sn++.'</td>
+                                                                    <td>'.$info['program'].'</td>
+                                                                    <td>'.$info['user_i'].'</td>
+                                                                    <td>'.$info['pincode'].'</td>
+                                                                    <td>'.$info['status'].'</td>
+                                                                </tr>';
+                                                            }
+                                                        ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        <?php endif;  ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -207,10 +240,10 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label class="form-label">Select Event <span
+                                                                <label class="form-label">Select Training <span
                                                                         class="text-red">*</span></label>
                                                                 <select name="program" class="form-control" id="">
-                                                                    <option value="">Select Event</option>
+                                                                    <option value="">Select Training</option>
                                                                     <?php
                                                                         $sql="SELECT * FROM programs";
                                                                         $results=mysqli_query($conn, $sql);
@@ -230,14 +263,14 @@
                                                                     placeholder="https://www.bing.com/">
                                                             </div>
                                                         </div>
-                                                        <div class="col-sm-12">
+                                                        <!-- <div class="col-sm-12">
                                                             <div class="form-group">
                                                                 <label class="form-label">No of Participants <span
                                                                         class="text-red">*</span></label>
                                                                 <input type="number" name="participants" class="form-control"
                                                                     placeholder="no of participants">
                                                             </div>
-                                                        </div>
+                                                        </div> -->
                                                     </div>
                                                 </div>
                                             </div>

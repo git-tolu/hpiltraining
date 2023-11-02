@@ -36,12 +36,13 @@
 
 if (mysqli_query($conn, $sql)) {
 	$attendcode = $_SESSION['attendancecode'];
-$sqlupdate="UPDATE attendant SET status = 'expired' WHERE pincode='$attendcode'";
-if (mysqli_query($conn, $sqlupdate)) {
-	header("location:successreview.php");
-}else{
-	header("location:failureattendance.php");
-}
+    header("location:successreview.php");
+// $sqlupdate="UPDATE attendant SET status = 'expired' WHERE pincode='$attendcode'";
+// if (mysqli_query($conn, $sqlupdate)) {
+// 	header("location:successreview.php");
+// }else{
+// 	header("location:failureattendance.php");
+// }
 }
                    
    }

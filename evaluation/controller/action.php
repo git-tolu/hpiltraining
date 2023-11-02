@@ -22,12 +22,12 @@
                     $_SESSION['attendancecode'] = $password;
                     $_SESSION['program'] = $info['program'];
                     //$_SESSION['dbpresent'] = "present";
-					
                     echo 'login';
                 }else {
                         echo "<font color='white'>invalid attendance code</font> <br>";
                 }
             }
+            
         }
     }
 

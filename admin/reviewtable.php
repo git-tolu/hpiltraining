@@ -88,76 +88,111 @@
                                         <h3 class="card-title">Review Table</h3>
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table id="file-datatable"
-                                                class="table table-bordered text-nowrap key-buttons border-bottom">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-bottom-0">s/n</th>
-                                                        <th class="border-bottom-0">Date</th>
-                                                        <th class="border-bottom-0">Venue</th>
-                                                        <th class="border-bottom-0">Office</th>
-                                                        <th class="border-bottom-0">Surname</th>
-                                                        <th class="border-bottom-0">Firstname</th>
-                                                        <th class="border-bottom-0">Company</th>
-                                                        <th class="border-bottom-0">Email</th>
-                                                        <th class="border-bottom-0">Phone</th>
-                                                        <th class="border-bottom-0">The training objective for each topic were identified and achieved</th>
-                                                        <th class="border-bottom-0">The content was organized and easy to follow</th>
-                                                        <th class="border-bottom-0">The materials distributed were relevant and useful</th>
-                                                        <th class="border-bottom-0">The trainer had good knowledge of the subject matter</th>
-                                                        <th class="border-bottom-0">The mode of deployment and quality of instruction was good</th>
-                                                        <th class="border-bottom-0">There was a good level of online participation and interaction</th>
-                                                        <th class="border-bottom-0">The Learning event was relevant</th>
-                                                        <th class="border-bottom-0">The Learning event met my expectation</th>
-                                                        <th class="border-bottom-0">I will be able to apply the knowledge acquired</th>
-                                                        <th class="border-bottom-0">What is your overall evaluation of this Learning event?</th>
-                                                        <th class="border-bottom-0">What were your top two expectations for this course?</th>
-                                                        <th class="border-bottom-0">What aspect of the learning event kindled your interest most?</th>
-                                                        <th class="border-bottom-0">Suggestions for improvement</th>
-                                                        <th class="border-bottom-0">Would you like to recieve latest updates and mentorship from us?</th>
-                                                        <th class="border-bottom-0">List Areas you need further training and Mentorship</th>
-													
-													
-													</tr>
-                                                </thead>
-                                                <tbody id="programsbody">
-                                                    <?php
-                                                    $sql="SELECT * FROM form_review";
-                                                    $results=mysqli_query($conn, $sql);
-                                                    $sn = 1;
-                                                    while ($info = mysqli_fetch_array($results)) {
-                                                        echo '<tr>
-                                                            <td>'.$sn++.'</td>
-                                                            <td>'.$info['user_date'].'</td>
-                                                            <td>'.$info['user_venue'].'</td>
-                                                            <td>'.$info['user_office'].'</td>
-                                                            <td>'.$info['user_surname'].'</td>
-                                                            <td>'.$info['user_firstname'].'</td>
-                                                            <td>'.$info['user_company'].'</td>
-                                                            <td>'.$info['user_email'].'</td>
-                                                            <td>'.$info['user_number'].'</td>
-                                                            <td>'.$info['training'].'</td>
-                                                            <td>'.$info['content'].'</td>
-                                                            <td>'.$info['materials'].'</td>
-                                                            <td>'.$info['knowledge'].'</td>
-                                                            <td>'.$info['deployment'].'</td>
-                                                            <td>'.$info['participartion'].'</td>
-                                                            <td>'.$info['relevant'].'</td>
-                                                            <td>'.$info['expectations'].'</td>
-                                                            <td>'.$info['apply'].'</td>
-                                                            <td>'.$info['evaluation'].'</td>
-                                                            <td>'.$info['topexpectation'].'</td>
-                                                            <td>'.$info['user_event'].'</td>
-                                                            <td>'.$info['user_improvement'].'</td>
-                                                            <td>'.$info['updates'].'</td>
-                                                            <td>'.$info['mentorship'].'</td>
-                                                        </tr>';
-                                                    }
-                                                ?>
-                                                </tbody>
-                                            </table>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Select Training <span
+                                                            class="text-red">*</span></label>
+                                                    <select name="program" class="form-control" id="" onchange="javascript:location.href = this.value;">
+                                                        <option value="">Select Training</option>
+                                                        <?php
+                                                        $sql = "SELECT DISTINCT  eventname FROM userattendance";
+                                                        $results = mysqli_query($conn, $sql);
+                                                        while ($info = mysqli_fetch_array($results)) {
+
+                                                            // $sql1 = "SELECT * FROM userattendance WHERE eventname='" . $info['eventname'] . "' ";
+                                                            // $results1 = mysqli_query($conn, $sql1);
+                                                            // $fetch = mysqli_fetch_assoc($results1);
+                                                            // $worldsArray = explode(' ', $modifiedString);
+                                                            // $get = $worldsArray[0];
+                                                            // echo '<option value="?usoff=' . $get . '">' . $modifiedString . '</option>';
+                                                            // if($modifiedString == $modifiedString){
+                                                            // }
+                                                            
+                                                            // echo '<option value="print.php?usoff=' . $get . '">' . $info['eventname'] . '</option>';
+                                                            echo '<option value="?usoff='.$info['eventname'].'">'.$info['eventname'] .'</option>';
+                                                            
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
                                         </div>
+                                        <?php if(isset($_GET['usoff'])):  ?>
+                                            <div class="table-responsive">
+                                                <table id="file-datatable"
+                                                    class="table table-bordered text-nowrap key-buttons border-bottom">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="border-bottom-0">s/n</th>
+                                                            <th class="border-bottom-0">Program</th>
+                                                            <th class="border-bottom-0">Date</th>
+                                                            <th class="border-bottom-0">Venue</th>
+                                                            <th class="border-bottom-0">Office</th>
+                                                            <th class="border-bottom-0">Surname</th>
+                                                            <th class="border-bottom-0">Firstname</th>
+                                                            <th class="border-bottom-0">Company</th>
+                                                            <th class="border-bottom-0">Email</th>
+                                                            <th class="border-bottom-0">Phone</th>
+                                                            <th class="border-bottom-0">The training objective for each topic were identified and achieved</th>
+                                                            <th class="border-bottom-0">The content was organized and easy to follow</th>
+                                                            <th class="border-bottom-0">The materials distributed were relevant and useful</th>
+                                                            <th class="border-bottom-0">The trainer had good knowledge of the subject matter</th>
+                                                            <th class="border-bottom-0">The mode of deployment and quality of instruction was good</th>
+                                                            <th class="border-bottom-0">There was a good level of online participation and interaction</th>
+                                                            <th class="border-bottom-0">The Learning event was relevant</th>
+                                                            <th class="border-bottom-0">The Learning event met my expectation</th>
+                                                            <th class="border-bottom-0">I will be able to apply the knowledge acquired</th>
+                                                            <th class="border-bottom-0">What is your overall evaluation of this Learning event?</th>
+                                                            <th class="border-bottom-0">What were your top two expectations for this course?</th>
+                                                            <th class="border-bottom-0">What aspect of the learning event kindled your interest most?</th>
+                                                            <th class="border-bottom-0">Suggestions for improvement</th>
+                                                            <th class="border-bottom-0">Would you like to recieve latest updates and mentorship from us?</th>
+                                                            <th class="border-bottom-0">List Areas you need further training and Mentorship</th>
+                                                        
+                                                        
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="programsbody">
+                                                        <?php
+                                                        $sql="SELECT * FROM form_review WHERE userprogram = '".$_GET['usoff']."'";
+                                                        $results=mysqli_query($conn, $sql);
+                                                        $sn = 1;
+                                                        while ($info = mysqli_fetch_array($results)) {
+                                                            echo '<tr>
+                                                                <td>'.$sn++.'</td>
+                                                                <td>'.$info['userprogram'].'</td>
+                                                                <td>'.$info['user_date'].'</td>
+                                                                <td>'.$info['user_venue'].'</td>
+                                                                <td>'.$info['user_office'].'</td>
+                                                                <td>'.$info['user_surname'].'</td>
+                                                                <td>'.$info['user_firstname'].'</td>
+                                                                <td>'.$info['user_company'].'</td>
+                                                                <td>'.$info['user_email'].'</td>
+                                                                <td>'.$info['user_number'].'</td>
+                                                                <td>'.$info['training'].'</td>
+                                                                <td>'.$info['content'].'</td>
+                                                                <td>'.$info['materials'].'</td>
+                                                                <td>'.$info['knowledge'].'</td>
+                                                                <td>'.$info['deployment'].'</td>
+                                                                <td>'.$info['participartion'].'</td>
+                                                                <td>'.$info['relevant'].'</td>
+                                                                <td>'.$info['expectations'].'</td>
+                                                                <td>'.$info['apply'].'</td>
+                                                                <td>'.$info['evaluation'].'</td>
+                                                                <td>'.$info['topexpectation'].'</td>
+                                                                <td>'.$info['user_event'].'</td>
+                                                                <td>'.$info['user_improvement'].'</td>
+                                                                <td>'.$info['updates'].'</td>
+                                                                <td>'.$info['mentorship'].'</td>
+                                                            </tr>';
+                                                        }
+                                                    ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        <?php endif;  ?>
+
                                     </div>
                                 </div>
                             </div>

@@ -12,20 +12,27 @@
           //  $sql="SELECT * FROM attendant WHERE user_i='$username' AND pincode='$password' AND status = 'active'";
             $sql="SELECT * FROM attendant WHERE pincode='$password' AND status = 'active'";
             $rez= mysqli_query($conn, $sql);
+            $info= mysqli_fetch_assoc($rez);
+            $endDate= $info['date'];
            // $sql1="UPDATE attendant SET status = 'expired' WHERE user_i='$username' AND pincode='$password'";
-           // $rez1= mysqli_query($conn, $sql1);    
-            if ($rez) {
-                // echo "hkijki";
-                if(mysqli_num_rows($rez) == 1){
-                   // $_SESSION['session2'] = $username;
-                    $_SESSION['attendancecode'] = $password;
-                    //$_SESSION['dbpresent'] = "present";
-					
-                    echo 'login';
-                }else {
-                        echo "<font color='white'>invalid attendance code</font> <br>";
-                }
-            }
+           // $rez1= mysqli_query($conn, $sql1);   
+           if(Date('Y-m-d') > $enddate) {
+
+               if ($rez) {
+                   // echo "hkijki";
+                   if(mysqli_num_rows($rez) == 1){
+                      // $_SESSION['session2'] = $username;
+                       $_SESSION['attendancecode'] = $password;
+                       //$_SESSION['dbpresent'] = "present";
+                       echo 'login';
+                   }else {
+                       echo "<font color='white'>invalid attendance code</font> <br>";
+                   }
+               }
+           }else{
+            echo "<font color='white'>invalid attendance code</font> <br>";
+
+           }
         }
     }
 

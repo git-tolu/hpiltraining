@@ -1,7 +1,7 @@
 <?php
 include_once "controller/session.php";
 include_once "controller/session.php";
-$pagetitle = "Event Attendance Manager";
+$pagetitle = "Training Attendance Manager";
 $pagesub = "Review";
 
 ?>
@@ -187,7 +187,7 @@ $pagesub = "Review";
                                                 <thead>
                                                     <tr>
                                                         <th class="border-bottom-0">s/n</th>
-                                                        <th class="border-bottom-0">Event</th>
+                                                        <th class="border-bottom-0">Training</th>
                                                         <th class="border-bottom-0">Date</th>
                                                         <th class="border-bottom-0">Venue</th>
                                                         <th class="border-bottom-0">Office</th>
@@ -271,10 +271,10 @@ $pagesub = "Review";
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <div class="form-group">
-                                                                <label class="form-label">Select Event <span
+                                                                <label class="form-label">Select Training <span
                                                                         class="text-red">*</span></label>
                                                                 <select name="program" class="form-control" id="">
-                                                                    <option value="">Select Event</option>
+                                                                    <option value="">Select Training</option>
                                                                     <?php
                                                                     $sql = "SELECT * FROM programs";
                                                                     $results = mysqli_query($conn, $sql);

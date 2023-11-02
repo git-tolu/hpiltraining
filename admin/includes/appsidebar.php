@@ -65,7 +65,7 @@
 							<li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="training_event.php"><i
                                         class="side-menu__icon fe fe-slack"></i><span
-                                        class="side-menu__label">Training Event</span></a>
+                                        class="side-menu__label">Training Training</span></a>
                             </li>
                             <li class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="training_online.php"><i

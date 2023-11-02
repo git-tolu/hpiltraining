@@ -1,7 +1,7 @@
 <?php
     include_once "controller/session.php";
-	$pagetitle="Event Attendance Manager";
-	$pagesub="Manage Event";
+	$pagetitle="Training Attendance Manager";
+	$pagesub="Manage Training";
 ?>
 <!doctype html>
 <html lang="en" dir="ltr">
@@ -129,12 +129,43 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header justify-content-between">
-                                        <h3 class="card-title">Event Details</h3>
+                                        <h3 class="card-title">Training Details</h3>
                                         <button class="modal-effect btn btn-primary btnView"
                                         data-bs-effect="effect-flip-vertical" data-bs-toggle="modal"
-                                        href="#modaldemo">Add Event</button>
+                                        href="#modaldemo">Add Training</button>
                                     </div>
                                     <div class="card-body">
+                                        <!-- <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="form-label">Select Training <span
+                                                            class="text-red">*</span></label>
+                                                    <select name="program" class="form-control" id="" onchange="javascript:location.href = this.value;">
+                                                        <option value="">Select Training</option>
+                                                        <?php
+                                                        // $sql = "SELECT DISTINCT  eventname FROM userattendance";
+                                                        // $results = mysqli_query($conn, $sql);
+                                                        // while ($info = mysqli_fetch_array($results)) {
+
+                                                        //     $sql1 = "SELECT * FROM userattendance WHERE eventname='" . $info['eventname'] . "' ";
+                                                        //     $results1 = mysqli_query($conn, $sql1);
+                                                        //     $fetch = mysqli_fetch_assoc($results1);
+                                                        //     $worldsArray = explode(' ', $modifiedString);
+                                                        //     $get = $worldsArray[0];
+                                                        //     // echo '<option value="?usoff=' . $get . '">' . $modifiedString . '</option>';
+                                                        //     // if($modifiedString == $modifiedString){
+                                                        //     // }
+                                                            
+                                                        //     // echo '<option value="print.php?usoff=' . $get . '">' . $info['eventname'] . '</option>';
+                                                        //     echo '<option value="?usoff='.$info['eventname'].'">'.$info['eventname'] .'</option>';
+                                                            
+                                                        // }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                        <?php //if(isset($_GET['usoff'])):  ?>
                                         <div class="table-responsive">
                                             <table id="file-datatable"
                                                 class="table table-bordered text-nowrap key-buttons border-bottom">
@@ -149,7 +180,7 @@
                                                 </thead>
                                                 <tbody id="programsbody">
                                                     <?php
-                                                    $sql="SELECT * FROM programs";
+                                                    $sql="SELECT * FROM programs ";
                                                     $results=mysqli_query($conn, $sql);
                                                     $sn = 1;
                                                     while ($info = mysqli_fetch_array($results)) {
@@ -165,8 +196,9 @@
                                                 ?>
                                                 </tbody>
                                             </table>
-
                                         </div>
+                                        <?php //endif;  ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +245,7 @@
             <div class="modal-dialog modal-dialog-centered " role="document">
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
-                        <h6 class="modal-title">Add An Event</h6><button aria-label="Close" class="btn-close"
+                        <h6 class="modal-title">Add Training</h6><button aria-label="Close" class="btn-close"
                             data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -223,7 +255,7 @@
                                 <form id="generate">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h3 class="card-title">Register An Event</h3>
+                                            <h3 class="card-title">Register  Training</h3>
                                         </div>
                                         <div class="card-body">
                                             <div id="error" style="border-radius: 50px;"
@@ -269,7 +301,8 @@
                         </div>
                     </div>
                     <div class="modal-footer text-center justify-content-center d-flex align-items-center">
-                        <button id="programUpdateBtn" class="btn btn-primary">Save changes</button> <button
+                        <!-- <button id="programUpdateBtn" class="btn btn-primary">Save changes</button> -->
+                         <button
                             class="btn btn-light" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>

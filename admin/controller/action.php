@@ -99,26 +99,26 @@
             // Grab info from form
             $program = mysqli_real_escape_string($conn, $_POST['program']);
             $learningpage = mysqli_real_escape_string($conn, $_POST['learningpage']);
-            $participants = mysqli_real_escape_string($conn, $_POST['participants']);
+            // $participants = mysqli_real_escape_string($conn, $_POST['participants']);
             $int = 1;
     
             // Check for empty fields
             if(empty($program)){ echo 'program cannot be empty <br>';}
-            if(empty($participants)){ echo  'no of participants is required <br>';}
+            // if(empty($participants)){ echo  'no of participants is required <br>';}
             if(empty($learningpage)){ echo  'no of learning page is required <br>';}
     
     
             if(!empty($program) && !empty($participants)){
                 //    Finally register the ADMIN
                 //        HASH PASSWORD
-                for ($i=1; $i <= $participants; $i++) {
+                // for ($i=1; $i <= $participants; $i++) {
                     $user_id = "user".substr(rand(), 0, 9); 
                     $pincode = substr(rand(), 0, 9); 
                     // $user = "user" + $user_id;
                     $sql = "INSERT INTO attendant (program, participants, user_i, pincode, status, learningpage) VALUES ('$program','$participants', '$user_id', '$pincode','active', '$learningpage')";
                     mysqli_query($conn, $sql);
         
-                }
+                // }
                 echo "registered"; 
             }
         }

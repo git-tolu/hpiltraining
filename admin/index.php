@@ -102,24 +102,6 @@
                                                 <p class="text-dark mb-0">Not a member?<a href="register.php"
                                                         class="text-primary ms-1">Sign UP</a></p>
                                             </div> -->
-                                            <label class="login-social-icon"><span>Login with Social</span></label>
-                                            <div class="d-flex justify-content-center">
-                                                <a href="javascript:void(0)">
-                                                    <div class="social-login me-4 text-center">
-                                                        <i class="fa fa-google"></i>
-                                                    </div>
-                                                </a>
-                                                <a href="javascript:void(0)">
-                                                    <div class="social-login me-4 text-center">
-                                                        <i class="fa fa-facebook"></i>
-                                                    </div>
-                                                </a>
-                                                <a href="javascript:void(0)">
-                                                    <div class="social-login text-center">
-                                                        <i class="fa fa-twitter"></i>
-                                                    </div>
-                                                </a>
-                                            </div>
                                         </div>
                                         <div class="tab-pane" id="tab6">
                                             <div id="mobile-num" class="wrap-input100 validate-input input-group mb-4">

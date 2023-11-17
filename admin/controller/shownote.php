@@ -79,27 +79,27 @@ if(isset($_POST['action']) && $_POST['action'] == 'displayUsers'){
             echo '<form id="programUpdate" class="form-horizontal">
 
             <div class=" row mb-4">
-                <label for="inputName" class="col-md-3 form-label">Name of Program </label>'.$result['id'].'
+                <label for="inputName" class="col-md-3 form-label">Name of Program </label>
                 <div class="col-md-9">
-                    <input type="hidden" class="form-control" name="id"  value="">
+                    <input type="hidden" class="form-control" name="id"  value="'.$result['id'].'">
                     <input type="text" class="form-control" name="program"  value="'.$result['program'].'">
                 </div>
             </div>
-            <div class=" row mb-4">
-                <label for="inputEmail3" class="col-md-3 form-label">Date Of Program</label>
-                <div class="col-md-9">
-                    <input type="date" class="form-control" name="date"  value="'.$result['date'].'"
-                        >
-                </div>
-            </div>
-            <div class=" row mb-4">
-                <label for="inputPassword3" class="col-md-3 form-label">Time Of Program</label>
-                <div class="col-md-9">
-                    <input type="text" class="form-control" name="time"  value="'.$result['time'].'"
-                        >
-                </div>
-            </div>
-        </form>';
+            </form>';
+            // <div class=" row mb-4">
+            //     <label for="inputEmail3" class="col-md-3 form-label">Date Of Program</label>
+            //     <div class="col-md-9">
+            //         <input type="date" class="form-control" name="date"  value="'.$result['date'].'"
+            //             >
+            //     </div>
+            // </div>
+            // <div class=" row mb-4">
+            //     <label for="inputPassword3" class="col-md-3 form-label">Time Of Program</label>
+            //     <div class="col-md-9">
+            //         <input type="text" class="form-control" name="time"  value="'.$result['time'].'"
+            //             >
+            //     </div>
+            // </div>
         }else {
             echo"data not found";
         }

@@ -16,11 +16,11 @@
             $endDate= $info['date'];
            // $sql1="UPDATE attendant SET status = 'expired' WHERE user_i='$username' AND pincode='$password'";
            // $rez1= mysqli_query($conn, $sql1);   
-           if(Date('Y-m-d') > $enddate) {
-
+           if(date('Y-m-d') > $endDate) {
+                
                if ($rez) {
                    // echo "hkijki";
-                   if(mysqli_num_rows($rez) == 1){
+                   if(mysqli_num_rows($rez) > 0){
                       // $_SESSION['session2'] = $username;
                        $_SESSION['attendancecode'] = $password;
                        //$_SESSION['dbpresent'] = "present";

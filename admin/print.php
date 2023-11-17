@@ -205,9 +205,6 @@ include_once "controller/session.php";
                         </td>
                     </tr>
                     <tr>
-                        <!-- <td colspan="7">
-                            Training title: 
-                        </td> -->
                         <?php
                             if (isset($_GET['usoff'])) {
                                 $usoff = $_GET['usoff'];
@@ -215,29 +212,34 @@ include_once "controller/session.php";
                                 $results1 = mysqli_query($conn, $sql1);
 
                                 $sn = 1;
-                                while ($fetch = mysqli_fetch_assoc($results1)) {
-                                    # code...
-                                    $usoffice = $fetch['user_office'];
-                                    $eventname = $fetch['eventname'];
-                                    $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
-                                    $results = mysqli_query($conn, $sql);
-                                    while ($info = mysqli_fetch_array($results)) {
-                                        echo '
-                                            <tr>
-                                                <td colspan="">Training title: ' . $fetch['eventname'] . '</td>
-                                        ';
-                                        //     <td colspan="">' . $info['user_firstname'] . '</td>
-                                        //     <td colspan="">' . $info['user_company'] . '</td>
-                                        // <tr>
-                                    }
-                                //     echo '
-                                    
-                                //         <td colspan="">Batch Training '.$sn++ .'' . $fetch['eventname'] . '</td>
-                                //     <tr>
-                                // ';
-                                }
+                                $fetch = mysqli_fetch_assoc($results1);
+                                echo '
+                                    <tr>
+                                        <td colspan="7"><h3>Training title: ' . $fetch['eventname'] . '<h3></td>
+                                ';
+                                // while ($fetch = mysqli_fetch_assoc($results1)) {
+                                //     # code...
+                                //     $usoffice = $fetch['user_office'];
+                                //     $eventname = $fetch['eventname'];
+                                //     $sql = "SELECT * FROM form_review WHERE user_office='$usoffice'";
+                                //     $results = mysqli_query($conn, $sql);
+                                //     while ($info = mysqli_fetch_array($results)) {
+                                //         echo '
+                                //             <tr>
+                                //                 <td colspan="">Training title: ' . $fetch['eventname'] . '</td>
+                                //         ';
+                                //         //     <td colspan="">' . $info['user_firstname'] . '</td>
+                                //         //     <td colspan="">' . $info['user_company'] . '</td>
+                                //         // <tr>
+                                //     }
+                                //     //     echo '
+                                        
+                                //     //         <td colspan="">Batch Training '.$sn++ .'' . $fetch['eventname'] . '</td>
+                                //     //     <tr>
+                                //     // ';
+                                // }
                             }
-                            ?>
+                        ?>
                     </tr>
                     <tr>
                         <td colspan="7">

@@ -85,7 +85,16 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header justify-content-between">
-                                        <h3 class="card-title">Review Table</h3>
+                                        <!-- <h3 class="card-title">Review Table</h3> -->
+                                        <?php if(isset($_GET['usoff'])): ?> <h3 class="card-title"><?= $_GET['usoff']  ?> <?php
+                                                $sql="SELECT * FROM attendant WHERE program ='".$_GET['usoff']."'";
+                                                $results=mysqli_query($conn, $sql);
+                                                
+                                                $info = mysqli_fetch_array($results);
+                                                echo '|'. $info['date'].'|'. $info['time'];
+                                                
+                                            ?></h3> <?php else: ?><h3 class="card-title">Review Table</h3><?php endif; ?>
+                                           
                                     </div>
                                     <div class="card-body">
                                         <div class="row">

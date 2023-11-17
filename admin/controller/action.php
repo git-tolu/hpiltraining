@@ -77,17 +77,17 @@
             // var_dump($_POST);
             // Grab info from form
             $program = mysqli_real_escape_string($conn, $_POST['program']);
-            $date = mysqli_real_escape_string($conn, $_POST['date']);
-            $time = mysqli_real_escape_string($conn, $_POST['time']);
+            // $date = mysqli_real_escape_string($conn, $_POST['date']);
+            // $time = mysqli_real_escape_string($conn, $_POST['time']);
     
             // Check for empty fields
             if(empty($program)){ echo 'program cannot be empty <br>';}
-            if(empty($date)){ echo  'date cannot be empty <br>';}
-            if(empty($time)){ echo  'time is required <br>';}
+            // if(empty($date)){ echo  'date cannot be empty <br>';}
+            // if(empty($time)){ echo  'time is required <br>';}
     
-            if(!empty($program) && !empty($date) && !empty($time)){
+            if(!empty($program)){
                 //    Finally register the program
-                $sql1 = "INSERT INTO programs (program, date, time) VALUES ('$program', '$date', '$time')";
+                $sql1 = "INSERT INTO programs (program) VALUES ('$program')";
                 mysqli_query($conn, $sql1);
                 echo "registered";
             }
@@ -99,23 +99,25 @@
             // Grab info from form
             $program = mysqli_real_escape_string($conn, $_POST['program']);
             $learningpage = mysqli_real_escape_string($conn, $_POST['learningpage']);
-            // $participants = mysqli_real_escape_string($conn, $_POST['participants']);
+            $date = mysqli_real_escape_string($conn, $_POST['date']);
+            $time = mysqli_real_escape_string($conn, $_POST['time']);
             $int = 1;
     
             // Check for empty fields
             if(empty($program)){ echo 'program cannot be empty <br>';}
-            // if(empty($participants)){ echo  'no of participants is required <br>';}
             if(empty($learningpage)){ echo  'no of learning page is required <br>';}
+            if(empty($date)){ echo  'Date of event required <br>';}
+            if(empty($time)){ echo  'TIme of event is required <br>';}
     
     
-            if(!empty($program) && !empty($participants)){
+            if(!empty($program) && !empty($learningpage) && !empty($date) && !empty($time)){
                 //    Finally register the ADMIN
                 //        HASH PASSWORD
                 // for ($i=1; $i <= $participants; $i++) {
                     $user_id = "user".substr(rand(), 0, 9); 
                     $pincode = substr(rand(), 0, 9); 
-                    // $user = "user" + $user_id;
-                    $sql = "INSERT INTO attendant (program, participants, user_i, pincode, status, learningpage) VALUES ('$program','$participants', '$user_id', '$pincode','active', '$learningpage')";
+                    // $user = "user" + $user_id;              
+                    $sql = "INSERT INTO attendant (program,  user_i, pincode, status, learningpage, date, time) VALUES ('$program', '$user_id', '$pincode','active', '$learningpage', '$date', '$time')";
                     mysqli_query($conn, $sql);
         
                 // }

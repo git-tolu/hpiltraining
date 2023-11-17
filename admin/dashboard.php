@@ -132,58 +132,88 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-header  justify-content-between">
-                                        <h3 class="card-title">Attendance Detail</h3>
+                                        
+                                        <?php if(isset($_GET['usoff'])): ?> <h3 class="card-title"><?= $_GET['usoff']  ?> <?php
+                                                $sql="SELECT * FROM attendant WHERE program ='".$_GET['usoff']."'";
+                                                $results=mysqli_query($conn, $sql);
+                                                
+                                                $info = mysqli_fetch_array($results);
+                                                echo '|'.$info['date'].'|'. $info['time'];
+                                                
+                                            ?></h3> <?php else: ?><h3 class="card-title">Attendance Detail</h3><?php endif; ?>
+                                           
                                        
                                     </div>
                                     <div class="card-body">
-                                        <div class="table-responsive">
-                                            <table id="file-datatable"
-                                                class="table table-bordered text-nowrap key-buttons border-bottom">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="border-bottom-0">s/n</th>
-                                                        <th class="border-bottom-0">Training</th>
-                                                        <th class="border-bottom-0">Date</th>
-                                                        <th class="border-bottom-0">Venue</th>
-                                                        <th class="border-bottom-0">Office</th>
-                                                        <th class="border-bottom-0">Surname</th>
-                                                        <th class="border-bottom-0">Firstname</th>
-                                                        <th class="border-bottom-0">Company</th>
-                                                        <th class="border-bottom-0">Email</th>
-                                                        <th class="border-bottom-0">Phone</th>
-                                                        <th class="border-bottom-0">Gender</th>
-                                                        <th class="border-bottom-0">Job</th>
-                                                        <th class="border-bottom-0">Department</th>
-                                                        <!-- <th class="border-bottom-0">Start date</th>
-                                                        <th class="border-bottom-0">Salary</th> -->
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="generatebody">
+                                       <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label class="form-label">Select Training <span
+                                                        class="text-red">*</span></label>
+                                              
+                                                <select name="program" class="form-control" id="" onchange="javascript:location.href = this.value;">
+                                                    <option value="">Select Training</option>
                                                     <?php
-                                                        $sql="SELECT * FROM userattendance";
-                                                        $results=mysqli_query($conn, $sql);
-                                                        $sn = 1;
-                                                        while ($info = mysqli_fetch_array($results)) {
-                                                            echo '<tr>
-                                                                <td>'.$sn++.'</td>
-                                                            <td>'.$info['eventname'].'</td>
-                                                            <td>'.$info['user_date'].'</td>
-                                                            <td>'.$info['user_venue'].'</td>
-                                                            <td>'.$info['user_office'].'</td>
-                                                            <td>'.$info['user_surname'].'</td>
-															<td>'.$info['user_firstname'].'</td>
-                                                            <td>'.$info['user_company'].'</td>
-                                                            <td>'.$info['user_email'].'</td>
-                                                            <td>'.$info['user_number'].'</td>
-                                                            <td>'.$info['gender'].'</td>
-                                                            <td>'.$info['user_job'].'</td>
-                                                            <td>'.$info['user_department'].'</td>
-                                                            </tr>';
-                                                        }
+                                                    $sql = "SELECT DISTINCT  eventname FROM userattendance";
+                                                    $results = mysqli_query($conn, $sql);
+                                                    while ($info = mysqli_fetch_array($results)) {
+
+                                                        $sql1 = "SELECT * FROM userattendance WHERE eventname='" . $info['eventname'] . "' ";
+                                                        $results1 = mysqli_query($conn, $sql1);
+                                                        $fetch = mysqli_fetch_assoc($results1);
+                                                        $worldsArray = explode(' ', $modifiedString);
+                                                        $get = $worldsArray[0];
+                                                        // echo '<option value="?usoff=' . $get . '">' . $modifiedString . '</option>';
+                                                        // if($modifiedString == $modifiedString){
+                                                        // }
+                                                        
+                                                        // echo '<option value="print.php?usoff=' . $get . '">' . $info['eventname'] . '</option>';
+                                                        echo '<option value="?usoff='.$info['eventname'].'">'.$info['eventname'] .'</option>';
+                                                        
+                                                    }
                                                     ?>
-                                                </tbody>
-                                            </table>
+                                                </select>
+                                            </div>
                                         </div>
+                                        <?php if(isset($_GET['usoff'])):  ?>
+
+                                            <div class="col-md-12">
+                                                <div class="table-responsive">
+                                                    <table id="basic-datatable"
+                                                        class="table table-bordered text-nowrap key-buttons border-bottom">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="border-bottom-0">s/n</th>
+                                                                <th class="border-bottom-0">Date</th>
+                                                                <th class="border-bottom-0">Venue</th>
+                                                                <th class="border-bottom-0">Office</th>
+                                                                <th class="border-bottom-0">Surname</th>
+                                                                <th class="border-bottom-0">Firstname</th>
+                                                                <th class="wd-25p border-bottom-0">action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="programsbody">
+                                                            <?php
+                                                            $sql="SELECT * FROM userattendance WHERE eventname='".$_GET['usoff']."' ";
+                                                            $results=mysqli_query($conn, $sql);
+                                                            $sn = 1;
+                                                            while ($info = mysqli_fetch_array($results)) {
+                                                                echo '<tr>
+                                                                    <td>'.$sn++.'</td>
+                                                                    <td>'.$info['user_date'].'</td>
+                                                                    <td>'.$info['user_venue'].'</td>
+                                                                    <td>'.$info['user_office'].'</td>
+                                                                    <td>'.$info['user_surname'].'</td>
+                                                                    <td>'.$info['user_firstname'].'</td>
+                                                                    <td><button id="'.$info['id'].'" class="modal-effect btn btn-primary btnView1" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo1"><span class="fe fe-eye"></span></button>
+                                                                </tr>';
+                                                            }
+                                                        ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        <?php endif;  ?>
+
                                     </div>
                                 </div>
                             </div>
@@ -261,6 +291,28 @@
                 </div>
                 <!-- add Modal -->
 
+        <!-- view form review Modal -->
+        <div class="modal fade" id="modaldemo1">
+            <div class="modal-dialog modal-dialog-centered " role="document">
+                <div class="modal-content modal-content-demo">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Attendance Details</h6><button aria-label="Close" class="btn-close"
+                            data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="card">
+                           
+                            <div class="card-body" id="modalForm2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer text-center justify-content-center d-flex align-items-center">
+                        <button class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  view form review Modal -->
         <!-- Sidebar-right -->
         <div class="sidebar sidebar-right sidebar-animate">
             <div class="panel panel-primary card mb-0 shadow-none border-0">
@@ -933,6 +985,23 @@
             //         }
             //     })
             // }
+
+                 // grab contents to edit
+            $('body').on('click', '.btnView1', function (e) {
+                e.preventDefault()
+                view2 = $(this).attr('id')
+                console.log(view2)
+                $.ajax({
+                    url: 'controller/shownote.php',
+                    method: 'POST',
+                    data: { view2: view2 },
+                    success: function (response) {
+                        console.log(response)
+                        $("#modalForm2").html(response)
+                    }
+                })
+            })
+
 
             // registration processing
             $("#generateBtn").click(function (e) {

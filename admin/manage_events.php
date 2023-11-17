@@ -21,7 +21,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="../assets/images/brand/favicon.ico" />
 
     <!-- TITLE -->
-    <title>Sash – Bootstrap 5 Admin & Dashboard Template</title>
+    <title>Attendance Sheet </title>
 
     <!-- BOOTSTRAP CSS -->
     <link id="style" href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -173,8 +173,8 @@
                                                     <tr>
                                                         <th class="border-bottom-0">s/n</th>
                                                         <th class="border-bottom-0">Name of Program </th>
-                                                        <th class="border-bottom-0">Date Of Program</th>
-                                                        <th class="border-bottom-0">Time Of Program</th>
+                                                        <!-- <th class="border-bottom-0">Date Of Program</th>
+                                                        <th class="border-bottom-0">Time Of Program</th> -->
                                                         <th class="wd-25p border-bottom-0">action</th>
                                                     </tr>
                                                 </thead>
@@ -187,11 +187,11 @@
                                                         echo '<tr>
                                                             <td>'.$sn++.'</td>
                                                             <td>'.$info['program'].'</td>
-                                                            <td>'.$info['date'].'</td>
-                                                            <td>'.$info['time'].'</td>
                                                             <td><button id="'.$info['id'].'" class="modal-effect btn btn-primary btnView" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo8"><span class="fe fe-edit"></span></button>
                                                             <button id="'.$info['id'].'"  class="btn btn-danger btnDelete"><span class="fe fe-trash-2"></span></button></td>
-                                                        </tr>';
+                                                            </tr>';
+                                                            // <td>'.$info['date'].'</td>
+                                                            // <td>'.$info['time'].'</td>
                                                     }
                                                 ?>
                                                 </tbody>
@@ -270,7 +270,7 @@
                                                             placeholder="Name of Program">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <!-- <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="form-label">Date Of Program<span
                                                                 class="text-red">*</span></label>
@@ -285,7 +285,7 @@
                                                         <input type="text" name="time" class="form-control"
                                                             placeholder="8am to 10pm">
                                                     </div>
-                                                </div>
+                                                </div> -->
                                                 <div class="col-sm-12 ">
                                                     <div class="form-group">
                                                         <input id="generateBtn" type="submit"

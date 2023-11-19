@@ -140,7 +140,8 @@
                                                 $info = mysqli_fetch_array($results);
                                                 echo '|'.$info['date'].'|'. $info['time'];
                                                 
-                                            ?></h3> <?php else: ?><h3 class="card-title">Attendance Detail</h3><?php endif; ?>
+                                            ?></h3> 
+                                            <?php else: ?><h3 class="card-title">Attendance Detail</h3><?php endif; ?>
                                            
                                        
                                     </div>
@@ -178,17 +179,23 @@
 
                                             <div class="col-md-12">
                                                 <div class="table-responsive">
-                                                    <table id="basic-datatable"
+                                                    <table id="file-datatable"
                                                         class="table table-bordered text-nowrap key-buttons border-bottom">
                                                         <thead>
                                                             <tr>
-                                                                <th class="border-bottom-0">s/n</th>
-                                                                <th class="border-bottom-0">Date</th>
-                                                                <th class="border-bottom-0">Venue</th>
-                                                                <th class="border-bottom-0">Office</th>
-                                                                <th class="border-bottom-0">Surname</th>
-                                                                <th class="border-bottom-0">Firstname</th>
-                                                                <th class="wd-25p border-bottom-0">action</th>
+                                                                <th class="border-bottom-0 text-capitalize">s/n</th>
+                                                                <th class="border-bottom-0 text-capitalize">Date</th>
+                                                                <th class="border-bottom-0 text-capitalize">Venue</th>
+                                                                <th class="border-bottom-0 text-capitalize">Office</th>
+                                                                <th class="border-bottom-0 text-capitalize">Surname</th>
+                                                                <th class="border-bottom-0 text-capitalize">Firstname</th>
+                                                                <th class="border-bottom-0 text-capitalize">company</th>
+                                                                <th class="border-bottom-0 text-capitalize">email</th>
+                                                                <th class="border-bottom-0 text-capitalize">number</th>
+                                                                <th class="border-bottom-0 text-capitalize">gender</th>
+                                                                <th class="border-bottom-0 text-capitalize">job</th>
+                                                                <th class="border-bottom-0 text-capitalize">department</th>
+                                                                <!-- <th class="wd-25p border-bottom-0">action</th> -->
                                                             </tr>
                                                         </thead>
                                                         <tbody id="programsbody">
@@ -204,8 +211,14 @@
                                                                     <td>'.$info['user_office'].'</td>
                                                                     <td>'.$info['user_surname'].'</td>
                                                                     <td>'.$info['user_firstname'].'</td>
-                                                                    <td><button id="'.$info['id'].'" class="modal-effect btn btn-primary btnView1" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo1"><span class="fe fe-eye"></span></button>
-                                                                </tr>';
+                                                                    <td>'.$info['user_company'].'</td>
+                                                                    <td>'.$info['user_email'].'</td>
+                                                                    <td>'.$info['user_number'].'</td>
+                                                                    <td>'.$info['gender'].'</td>
+                                                                    <td>'.$info['user_job'].'</td>
+                                                                    <td>'.$info['user_department'].'</td>
+                                                                    </tr>';
+                                                                    // <td><button id="'.$info['id'].'" class="modal-effect btn btn-primary btnView1" data-bs-effect="effect-flip-vertical" data-bs-toggle="modal" href="#modaldemo1"><span class="fe fe-eye"></span></button>
                                                             }
                                                         ?>
                                                         </tbody>
@@ -952,6 +965,7 @@
     <!-- CUSTOM JS -->
     <script src="../assets/js/custom.js"></script>
 
+
     <!-- DATA TABLE JS-->
     <script src="../assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
     <script src="../assets/plugins/datatable/js/dataTables.bootstrap5.js"></script>
@@ -966,7 +980,9 @@
     <script src="../assets/plugins/datatable/dataTables.responsive.min.js"></script>
     <script src="../assets/plugins/datatable/responsive.bootstrap5.min.js"></script>
     <script src="../assets/js/table-data.js"></script>
-
+    <!-- INTERNAL Edit-Table JS -->
+    <script src="../assets/plugins/edit-table/bst-edittable.js"></script>
+    <script src="../assets/plugins/edit-table/edit-table.js"></script>
     <!-- SWEET-ALERT JS -->
     <script src="../assets/js/sweet.js"></script>
 
